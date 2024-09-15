@@ -1,5 +1,6 @@
 import random
 import matplotlib.pyplot as plt
+import numpy as np
 def run_optimal_stop(len_candidates, experiments):
     # len_candidates = 100
     solution_found_count = {}
@@ -43,7 +44,16 @@ for i in range (1,6):
         bestRuns[bestStop]["count"] += 1
         bestRuns[bestStop]["indexes"].append(i)
     x, y = zip(*optimal_count.items())
+
     plt.plot(x,y)
+    # Rotate x ticks for better visability
+    plt.xticks(rotation=90)
+    # Round the x-ticks to 1 decimal place
+    rounded_xticks = [round(float(tick), 0) for tick in x]
+
+    # Set the new x-tick labels
+    plt.xticks(x, rounded_xticks)
+
     plt.show()
 print(bestRuns)
 
