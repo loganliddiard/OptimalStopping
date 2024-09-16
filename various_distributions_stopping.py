@@ -163,7 +163,7 @@ def run_algorithm_test_part3(distribution):
     }
 
 ## This value will determine if 2 smaller test of each or 
-largeTest = False
+largeTest = True
 
 small_iterations = 2
 large_iterations = 50
@@ -196,14 +196,31 @@ else:
 
     uniform_data = []
     for i in range(0,large_iterations):
-        print(f"\nRunningUniform Test #{i}:")
+        print(f"\nRunning Uniform Test #{i}:")
         uniform_data.append(run_algorithm_test("uniform",largeTest))
-
     normal_data = []
     for i in range(0,large_iterations):
         print(f"\nRunning Normal Test #{i}:")
         normal_data.append(run_algorithm_test("normal",largeTest))
+    
+    print("Running tests for Part 3...")
+    uniform_3_original = []
+    uniform_3_dynamic = []
+    for i in range(0, large_iterations):
+        print(f"\nRunning Uniform Test #{i}...")
+        # Run Part 3 algorithms for uniform distribution
+        results = run_algorithm_test_part3("uniform")
+        uniform_3_original.append(results['original']['net_reward'])
+        uniform_3_dynamic.append(results['dynamic']['net_reward'])
 
+    normal_3_original = []
+    normal_3_dynamic = []
+    for i in range(0, large_iterations):
+        print(f"\nRunning Normal Test #{i}...")
+        # Run Part 3 algorithms for normal distribution
+        results = run_algorithm_test_part3("normal")
+        normal_3_original.append(results['original']['net_reward'])
+        normal_3_dynamic.append(results['dynamic']['net_reward'])
     print("\nNow plotting graphs...")
 
     ##plotting beta data
@@ -232,6 +249,28 @@ else:
 
     plt.title(f"Normal Dist. Optimal Stopping Points with an average of {average}")
     plt.savefig('normal_optimal_stopping_plot.png')
+    plt.clf()
+
+    ##plotting uniform data for part 3
+
+    sns.histplot(uniform_3_original, kde=True, color="blue", label="Original")
+    sns.histplot(uniform_3_dynamic, kde=True, color="red", label="Dynamic")
+    average_original = np.mean(uniform_3_original)
+    average_dynamic = np.mean(uniform_3_dynamic)
+    plt.title(f"Uniform Distribution: Original vs Dynamic Stopping)")
+    plt.legend()
+    plt.savefig('uniform_3_comparison_plot.png')
+    plt.clf()
+
+    ##plotting normal data for part 3
+
+    sns.histplot(normal_3_original, kde=True, color="blue", label="Original")
+    sns.histplot(normal_3_dynamic, kde=True, color="red", label="Dynamic")
+    average_original = np.mean(normal_3_original)
+    average_dynamic = np.mean(normal_3_dynamic)
+    plt.title(f"Normal Distribution: Original vs Dynamic Stopping)")
+    plt.legend()
+    plt.savefig('normal_3_comparison_plot.png')
     plt.clf()
 
     print("\Done!")
