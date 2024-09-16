@@ -1,5 +1,8 @@
 import numpy as np
 import math
+from scipy.stats import beta
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 len_candidates = 100
 num_experiments = 1000
@@ -13,6 +16,10 @@ def explore_optimal_thresholds(distribution, len_candidates, num_experiments):
 
     for experiment in range(num_experiments):
         match distribution:
+            case "beta":
+                a = 2
+                b = 7
+                candidates = beta.rvs(a,b,size=len_candidates)
             case "uniform":
                 candidates = np.random.uniform(1, 1000, len_candidates)     
             case "normal":
@@ -47,7 +54,7 @@ def stopping_algorithm(candidates, threshold):
             return candidates[i]
 
 # Function to run a test on our algorithm.
-def run_algorithm_test(distribution):
+def run_algorithm_test(distribution,largeTest):
     test_threshold = explore_optimal_thresholds(distribution, len_candidates, num_experiments)            # 'num_experiments' tests are conducted to find an optimal stopping threshold. (We know the optimal threshold is .37 usually)
 
     match distribution:                                                                                   # a random group of 1000 candidates is generated with the given distribution.
@@ -55,23 +62,88 @@ def run_algorithm_test(distribution):
                 test_candidates = np.random.uniform(1, 1000, len_candidates)     
             case "normal":
                 test_candidates = np.random.normal(50, 10, len_candidates)  
+            case "beta":
+                a = 2
+                b = 7
+                test_candidates = beta.rvs(a,b,size=len_candidates)
                                    
     test_optimal_candidate = max(test_candidates)                                           # the objectively optimal candidate is recorded, for comparison purposes
 
     test_chosen_candidate = stopping_algorithm(test_candidates, test_threshold)     # Our algorithm is run on the group and it chooses a candidate.
 
-    print(f"After running our algorithm on a test group of size {len_candidates} with a {distribution} distribution, using a stopping threshold of {test_threshold}, it chose a candidate with value {test_chosen_candidate}. The best candidate in the group had value {test_optimal_candidate}.")
+    if not largeTest:
+        print(f"After running our algorithm on a test group of size {len_candidates} with a {distribution} distribution, using a stopping threshold of {test_threshold}, it chose a candidate with value {test_chosen_candidate}. The best candidate in the group had value {test_optimal_candidate}.")
 
+    return test_threshold
 
+## This value will determine if 2 smaller test of each or 
+largeTest = False
+
+small_iterations = 2
+large_iterations = 50
 
 # Run the tests using varous distributions.
+if not largeTest:
+    for i in range(0,small_iterations):
+        print(f"\nSkewed Beta Test #{i}:")
+        run_algorithm_test("beta",largeTest)
 
-for i in range(0,2):
-    print(f"\nUniform Test #{i}:")
-    run_algorithm_test("uniform")
+    for i in range(0,small_iterations):
+        print(f"\nUniform Test #{i}:")
+        run_algorithm_test("uniform",largeTest)
 
-for i in range(0,2):
-    print(f"\nNormal Test #{i}:")
-    run_algorithm_test("normal")
+    for i in range(0,small_iterations):
+        print(f"\nNormal Test #{i}:")
+        run_algorithm_test("normal",largeTest)
 
+# run larger tests across each type of distibution
+else:
+
+    beta_data = []
+    for i in range(0,large_iterations):
+        print(f"\nRunning Skewed Beta Test #{i}...")
+        beta_data.append(run_algorithm_test("beta",largeTest))
+
+    uniform_data = []
+    for i in range(0,large_iterations):
+        print(f"\nRunningUniform Test #{i}:")
+        uniform_data.append(run_algorithm_test("uniform",largeTest))
+
+    normal_data = []
+    for i in range(0,large_iterations):
+        print(f"\nRunning Normal Test #{i}:")
+        normal_data.append(run_algorithm_test("normal",largeTest))
+
+    print("\nNow plotting graphs...")
+
+    ##plotting beta data
+    sns.histplot(beta_data, kde=True)
+
+    average = np.mean(beta_data)
+
+    plt.title(f"Beta Dist. Optimal Stopping Points with an average of {average}")
+    plt.savefig('beta_optimal_stopping_plot.png')
+    plt.clf()
+    
+
+    ##plotting uniform data
+    sns.histplot(uniform_data, kde=True)
+
+    average = np.mean(uniform_data)
+
+    plt.title(f"Uniform Dist. Optimal Stopping Points with an average of {average}")
+    plt.savefig('uniform_optimal_stopping_plot.png')
+    plt.clf()
+
+    ##plotting normal data
+    sns.histplot(normal_data, kde=True)
+
+    average = np.mean(normal_data)
+
+    plt.title(f"Normal Dist. Optimal Stopping Points with an average of {average}")
+    plt.savefig('normal_optimal_stopping_plot.png')
+    plt.clf()
+
+    print("\Done!")
+    
 
