@@ -95,38 +95,72 @@ def stopping_algorithm_with_reward(candidates, threshold):
             return candidates[i], evaluations
         if candidates[i] > best_candidate_pre_threshold:
             return candidates[i], evaluations
-        
+# Follow the same rules but choose a candidate that exceeds the 75% percentile of those seen before
+def dynamic_stopping_algorithm_with_reward(candidates, threshold):
+    best_candidate_pre_threshold = 0
+    evaluations = 0
+    candidate_values_pre_threshold = []
+
+    for i in range(0, math.ceil((len(candidates) - 1) * threshold)):
+        evaluations += 1
+        candidate_values_pre_threshold.append(candidates[i])
+        if candidates[i] > best_candidate_pre_threshold:
+            best_candidate_pre_threshold = candidates[i]
+
+    
+
+    for i in range(math.ceil((len(candidates) - 1) * threshold), len(candidates)):
+        evaluations += 1
+        remaining_candidates = len(candidates) - i
+
+        percentile_threshold = np.percentile(candidate_values_pre_threshold, 75)
+        if i == len(candidates)-1:
+            return candidates[i], evaluations
+        if candidates[i] > percentile_threshold:
+            return candidates[i], evaluations
+
 
 def run_algorithm_test_part3(distribution):
     # Find the optimal stopping threshold based on the distribution
     test_threshold = explore_optimal_thresholds(distribution, len_candidates, num_experiments)
 
     # Generate test candidates based on the distribution
-    match distribution:
-        case "uniform":
-            test_candidates = np.random.uniform(1, 99, len_candidates)
-        case "normal":
-            # Clip ensures that the values will be between 1 and 99
-            test_candidates = np.clip(np.random.normal(50, 10, len_candidates), 1, 99)
+    if distribution == "uniform":
+        test_candidates = np.random.uniform(1, 100, len_candidates)
+    elif distribution == "normal":
+        test_candidates = np.clip(np.random.normal(50, 10, len_candidates), 1, 99)
 
     # Find the optimal candidate in the test group
     test_optimal_candidate = max(test_candidates)
 
-    # Run the stopping algorithm and get the chosen candidate and number of evaluations
-    test_chosen_candidate, evaluations = stopping_algorithm_with_reward(test_candidates, test_threshold)
+    # Run the stopping algorithm and get the chosen candidate and number of evaluations (Original)
+    test_chosen_candidate_original, evaluations_original = stopping_algorithm_with_reward(test_candidates, test_threshold)
+    net_reward_original = test_chosen_candidate_original - evaluations_original
 
-    # Calculate the net reward
-    net_reward = test_chosen_candidate - evaluations
+    # Run the dynamic stopping algorithm (New)
+    test_chosen_candidate_dynamic, evaluations_dynamic = dynamic_stopping_algorithm_with_reward(test_candidates, test_threshold)
+    net_reward_dynamic = test_chosen_candidate_dynamic - evaluations_dynamic
 
-    # Print the results
-    print(f"\nAfter running our algorithm on a test group of size {len_candidates} with a {distribution} distribution:")
+    # Print the results for original algorithm
+    print(f"\n[Original Algorithm] After running our algorithm on a test group of size {len_candidates} with a {distribution} distribution:")
     print(f"- Optimal stopping threshold: {test_threshold * 100}%")
-    print(f"- Chosen candidate value: {test_chosen_candidate}")
-    print(f"- Number of evaluations: {evaluations}")
-    print(f"- Net reward: {net_reward}")
+    print(f"- Chosen candidate value: {test_chosen_candidate_original}")
+    print(f"- Number of evaluations: {evaluations_original}")
+    print(f"- Net reward: {net_reward_original}")
     print(f"- Optimal candidate value in the group: {test_optimal_candidate}")
 
-    return test_threshold, net_reward
+    # Print the results for dynamic algorithm
+    print(f"\n[Dynamic Algorithm] After running our algorithm on a test group of size {len_candidates} with a {distribution} distribution:")
+    print(f"- Optimal stopping threshold: {test_threshold * 100}%")
+    print(f"- Chosen candidate value: {test_chosen_candidate_dynamic}")
+    print(f"- Number of evaluations: {evaluations_dynamic}")
+    print(f"- Net reward: {net_reward_dynamic}")
+    print(f"- Optimal candidate value in the group: {test_optimal_candidate}")
+
+    return {
+        "original": {"threshold": test_threshold, "net_reward": net_reward_original},
+        "dynamic": {"threshold": test_threshold, "net_reward": net_reward_dynamic}
+    }
 
 ## This value will determine if 2 smaller test of each or 
 largeTest = False
