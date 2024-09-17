@@ -76,75 +76,77 @@ def run_algorithm_test(distribution,largeTest):
 
     return test_threshold
 
-## This value will determine if 2 smaller test of each or 
-largeTest = True
+def run(largeTest = True):
+    ## This value will determine if 2 smaller test of each or 
 
-small_iterations = 2
-large_iterations = 50
+    small_iterations = 2
+    large_iterations = 50
 
-# Run the tests using varous distributions.
-if not largeTest:
-    for i in range(0,small_iterations):
-        print(f"\nSkewed Beta Test #{i}:")
-        run_algorithm_test("beta",largeTest)
+    # Run the tests using varous distributions.
+    if not largeTest:
+        for i in range(0,small_iterations):
+            print(f"\nSkewed Beta Test #{i}:")
+            run_algorithm_test("beta",largeTest)
 
-    for i in range(0,small_iterations):
-        print(f"\nUniform Test #{i}:")
-        run_algorithm_test("uniform",largeTest)
-        print(f"\nUniform Test for Part 3 #{i}:")
+        for i in range(0,small_iterations):
+            print(f"\nUniform Test #{i}:")
+            run_algorithm_test("uniform",largeTest)
+            print(f"\nUniform Test for Part 3 #{i}:")
 
-    for i in range(0,small_iterations):
-        print(f"\nNormal Test #{i}:")
-        run_algorithm_test("normal",largeTest)
-        print(f"\nNormal Test for Part 3 #{i}:")
+        for i in range(0,small_iterations):
+            print(f"\nNormal Test #{i}:")
+            run_algorithm_test("normal",largeTest)
+            print(f"\nNormal Test for Part 3 #{i}:")
 
-# run larger tests across each type of distibution
-else:
+    # run larger tests across each type of distibution
+    else:
 
-    beta_data = []
-    for i in range(0,large_iterations):
-        print(f"\nRunning Skewed Beta Test #{i}...")
-        beta_data.append(run_algorithm_test("beta",largeTest))
+        beta_data = []
+        for i in range(0,large_iterations):
+            print(f"\nRunning Skewed Beta Test #{i}...")
+            beta_data.append(run_algorithm_test("beta",largeTest))
 
-    uniform_data = []
-    for i in range(0,large_iterations):
-        print(f"\nRunning Uniform Test #{i}:")
-        uniform_data.append(run_algorithm_test("uniform",largeTest))
-    normal_data = []
-    for i in range(0,large_iterations):
-        print(f"\nRunning Normal Test #{i}:")
-        normal_data.append(run_algorithm_test("normal",largeTest))
-    
-    print("\nNow plotting graphs...")
+        uniform_data = []
+        for i in range(0,large_iterations):
+            print(f"\nRunning Uniform Test #{i}:")
+            uniform_data.append(run_algorithm_test("uniform",largeTest))
+        normal_data = []
+        for i in range(0,large_iterations):
+            print(f"\nRunning Normal Test #{i}:")
+            normal_data.append(run_algorithm_test("normal",largeTest))
+        
+        print("\nNow plotting graphs...")
 
-    ##plotting beta data
-    sns.histplot(beta_data, kde=True)
+        ##plotting beta data
+        sns.histplot(beta_data, kde=True)
 
-    average = np.mean(beta_data)
+        average = np.mean(beta_data)
 
-    plt.title(f"Beta Dist. Optimal Stopping Points with an average of {average}")
-    plt.savefig('beta_optimal_stopping_plot.png')
-    plt.clf()
-    
+        plt.title(f"Beta Dist. Optimal Stopping Points with an average of {average}")
+        plt.savefig('beta_optimal_stopping_plot.png')
+        plt.clf()
+        
 
-    ##plotting uniform data
-    sns.histplot(uniform_data, kde=True)
+        ##plotting uniform data
+        sns.histplot(uniform_data, kde=True)
 
-    average = np.mean(uniform_data)
+        average = np.mean(uniform_data)
 
-    plt.title(f"Uniform Dist. Optimal Stopping Points with an average of {average}")
-    plt.savefig('uniform_optimal_stopping_plot.png')
-    plt.clf()
+        plt.title(f"Uniform Dist. Optimal Stopping Points with an average of {average}")
+        plt.savefig('uniform_optimal_stopping_plot.png')
+        plt.clf()
 
-    ##plotting normal data
-    sns.histplot(normal_data, kde=True)
+        ##plotting normal data
+        sns.histplot(normal_data, kde=True)
 
-    average = np.mean(normal_data)
+        average = np.mean(normal_data)
 
-    plt.title(f"Normal Dist. Optimal Stopping Points with an average of {average}")
-    plt.savefig('normal_optimal_stopping_plot.png')
-    plt.clf()
+        plt.title(f"Normal Dist. Optimal Stopping Points with an average of {average}")
+        plt.savefig('normal_optimal_stopping_plot.png')
+        plt.clf()
 
-    print("\Done!")
-    
+        print("\Done!")
+        
 
+if __name__ == "__main__":
+    run(largeTest=False)

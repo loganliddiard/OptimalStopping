@@ -55,12 +55,21 @@ def plot_optimal_stopping_and_net_rewards(distribution):
         percentage = (i / len_candidates) * 100
         x_percentage.append(percentage)
 
+    total_weighted_values = sum(int(x[i]) * y[i] for i in range(len(x)))
+    total_frequencies = sum(y)
+    average_best_threshold = total_weighted_values / total_frequencies
+
+    # Print the average best threshold
+    print(f"Average best threshold (as percentage) for {distribution}: {average_best_threshold:.2f}%")
+
+    
     # Plot for optimal stopping points
     plt.figure(figsize=(10, 6))
-    sns.histplot(y, kde=True, label=f'{distribution.capitalize()} Distribution')
-    plt.title(f'{distribution.capitalize()} Dist. Optimal Stopping Points')
-    plt.xlabel('Frequency of Optimal Candidate')
-    plt.ylabel('Count')
+    sns.histplot(x=x_percentage, weights=[max(0, weight) for weight in y], bins=20, kde=True, label=f'{distribution.capitalize()} Distribution', color='green' if distribution == 'normal' else 'blue')
+
+    plt.title(f'Optimal Stopping for {distribution.capitalize()} Distribution')
+    plt.xlabel('Percentage of Candidates Seen')
+    plt.ylabel('Frequency of Optimal Candidate')
     plt.legend()
     plt.tight_layout()
     plt.savefig(f"{distribution}_optimal_stopping_plot.png")
