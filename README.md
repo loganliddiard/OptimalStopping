@@ -50,9 +50,8 @@ The program wilil execute the algorithm on various distributions and generate re
 
     Interestingly enough after running about 50,000 experiments and taking the best outcome of each 1000, we graphed a distribution plot for each of the distributions
 
-    Ironically they were all close to 37% with slight variances for each. The following is the results of these three serparate runs of these experiments:
+    They were all close to 37% with slight variances for each. The following is the results of these three serparate runs of these experiments:
 
-        Ironically they were all close to 37% with slight variances for each. The following is the results of these three serparate runs of these experiments:
         - Beta Dist. 37.68%
         - Normal Dist. 36.36%
         - Uniform Dist. 37.68%
@@ -74,7 +73,7 @@ The program wilil execute the algorithm on various distributions and generate re
 
     When doing the Investment Strategy, we ran 50,000 experiments on both uniform and and normal distributions. The optimal threshold for uniform distributions was 34.33%, and the optimal threshold for the normal distributions was 27.37%. This showed significantly different values compared to our past parts. Also, we found that the average net reward was far higher for the normal distributions than the uniform distributions.
 
-    Below was some of our graph data collected for the optimal stopping threshold and net rewards gained.
+    Below are some of our graph data collected for the optimal stopping threshold and net rewards gained.
 
 **Uniform**:
 <p align="center">
