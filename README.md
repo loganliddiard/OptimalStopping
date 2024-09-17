@@ -44,15 +44,18 @@ The program wilil execute the algorithm on various distributions and generate re
 
 ### Part 1: General Optimum
 
-    Upon testing this algorithm rigorously, we have determined that the optimal stopping point is closer to 37% for this optimal stopping problem. This coorelates to the readings and discussions to what we had in class. 
+    After generating millions of random scenarios, we have determined that the optimal stopping point is closer to 37% for this optimal stopping problem. This coorelates to the readings and discussions to what we had in class. 
+    To test our algorithm's consistency and the reasonability of its choices, we ran 1,000,000 random, uniformally-distributed tests on it, using the 37% stopping threshold. After running our algorithm on the 1,000,000 data sets, the average value of its chosen candidate was 813.6536287044182. The average value of an optimal candidate was 999.0024418005876. This means that on average, the algorithm yielded a candidate that was 81% optimal.
 
 ### Part 2: Alternative Distributions
 
     Interestingly enough after running about 50,000 experiments and taking the best outcome of each 1000, we graphed a distribution plot for each of the distributions they were all close to 37% with slight variances for each. The following is the results of these three serparate runs of these experiments:
 
-        - Beta Dist. 37.68%
+        - Beta Dist (alpha=2, beta=7). 37.68%  
         - Normal Dist. 36.36%
         - Uniform Dist. 37.68%
+
+    For the Beta distribution, we found that the optimal stopping threshold does not stray very far from 37% until the alpha and beta values are quite extreme. For example, with an alpha of 1 and a beta of 10, the average optimal stopping point neared closer to 40%.
 
     To save the the hastle of rerunning our larger experiment the graphs for each are provided and labeled below as so:
 
