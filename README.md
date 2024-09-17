@@ -44,8 +44,8 @@ The program wilil execute the algorithm on various distributions and generate re
 
 ### Part 1: General Optimum
 
-    After generating millions of random scenarios, we have determined that the optimal stopping point is closer to 37% for this optimal stopping problem. This coorelates to the readings and discussions to what we had in class. 
-    To test our algorithm's consistency and the reasonability of its choices, we ran 1,000,000 random, uniformally-distributed tests on it, using the 37% stopping threshold. After running our algorithm on the 1,000,000 data sets, the average value of its chosen candidate was 813.6536287044182. The average value of an optimal candidate was 999.0024418005876. This means that on average, the algorithm yielded a candidate that was 81% optimal.
+    After generating millions of random scenarios, we have determined that the optimal stopping point is closer to 37% for this optimal stopping problem. This correlates to the readings and discussions to what we had in class. 
+    To test our algorithm's consistency and the reasonability of its choices, we ran 1,000,000 random, uniformally-distributed tests on it, using the 37% stopping threshold. After running our algorithm on the 1,000,000 data sets (each having 1000 candidates), the average value of its chosen candidate was 813.6536287044182. The average value of an optimal candidate was 999.0024418005876. This means that on average, the algorithm yielded a candidate that was 81% optimal.
 
 ### Part 2: Alternative Distributions
 
