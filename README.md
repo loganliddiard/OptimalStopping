@@ -48,16 +48,16 @@ The program wilil execute the algorithm on various distributions and generate re
 
 ### Part 2: Alternative Distributions
 
-Interestingly enough after running about 50,000 experiments and taking the best outcome of each 1000, we graphed a distribution plot for each of the distributions
-
-Ironically they were all close to .37% with slight variances for each. The following is the results of these three serparate runs of these experiments:
+    Interestingly enough after running about 50,000 experiments and taking the best outcome of each 1000, we graphed a distribution plot for each of the distributions
 
     Ironically they were all close to 37% with slight variances for each. The following is the results of these three serparate runs of these experiments:
-    - Beta Dist. 37.68%
-    - Normal Dist. 36.36%
-    - Uniform Dist. 37.68%
 
-To save the the hastle of rerunning our larger experiment the graphs for each are provided and labeled below as so:
+        Ironically they were all close to 37% with slight variances for each. The following is the results of these three serparate runs of these experiments:
+        - Beta Dist. 37.68%
+        - Normal Dist. 36.36%
+        - Uniform Dist. 37.68%
+
+    To save the the hastle of rerunning our larger experiment the graphs for each are provided and labeled below as so:
 
 <p align="center">
   <img src="Test_beta_optimal_stopping_plot.png" alt="roadmap">
