@@ -48,9 +48,7 @@ The program wilil execute the algorithm on various distributions and generate re
 
 ### Part 2: Alternative Distributions
 
-    Interestingly enough after running about 50,000 experiments and taking the best outcome of each 1000, we graphed a distribution plot for each of the distributions
-
-    They were all close to 37% with slight variances for each. The following is the results of these three serparate runs of these experiments:
+    Interestingly enough after running about 50,000 experiments and taking the best outcome of each 1000, we graphed a distribution plot for each of the distributions they were all close to 37% with slight variances for each. The following is the results of these three serparate runs of these experiments:
 
         - Beta Dist. 37.68%
         - Normal Dist. 36.36%
