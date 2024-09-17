@@ -91,12 +91,10 @@ def run(largeTest = True):
         for i in range(0,small_iterations):
             print(f"\nUniform Test #{i}:")
             run_algorithm_test("uniform",largeTest)
-            print(f"\nUniform Test for Part 3 #{i}:")
 
         for i in range(0,small_iterations):
             print(f"\nNormal Test #{i}:")
             run_algorithm_test("normal",largeTest)
-            print(f"\nNormal Test for Part 3 #{i}:")
 
     # run larger tests across each type of distibution
     else:
